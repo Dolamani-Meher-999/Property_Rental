@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import PropertyCard from '../../../components/tenant/PropertyCard';
+import axios from "axios";
+
 import { 
   FaSearch, 
   FaBed, 
@@ -16,47 +18,47 @@ import {
 } from 'react-icons/fa';
 
 // Mock data with more realistic properties
-const mockProperties = [
-  {
-    id: 1,
-    title: 'Luxury Apartment in Downtown',
-    type: 'Apartment',
-    price: 2500,
-    location: 'Downtown, New York',
-    image: 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1740&q=80',
-    rating: 4.8,
-    beds: 2,
-    baths: 2,
-    area: 1200,
-    featured: true
-  },
-  {
-    id: 2,
-    title: 'Modern Loft with City View',
-    type: 'Loft',
-    price: 3200,
-    location: 'Soho, New York',
-    image: 'https://images.unsplash.com/photo-1502672260266-37a6c1f2f3a5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1740&q=80',
-    rating: 4.9,
-    beds: 1,
-    baths: 1,
-    area: 950,
-    featured: false
-  },
-  {
-    id: 3,
-    title: 'Spacious Family House',
-    type: 'House',
-    price: 4200,
-    location: 'Brooklyn, New York',
-    image: 'https://images.unsplash.com/photo-1580587771525-78b9dba3b914?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1740&q=80',
-    rating: 4.7,
-    beds: 4,
-    baths: 2.5,
-    area: 2200,
-    featured: true
-  }
-];
+// const mockProperties = [
+//   {
+//     id: 1,
+//     title: 'Luxury Apartment in Downtown',
+//     type: 'Apartment',
+//     price: 2500,
+//     location: 'Downtown, New York',
+//     image: 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1740&q=80',
+//     rating: 4.8,
+//     beds: 2,
+//     baths: 2,
+//     area: 1200,
+//     featured: true
+//   },
+//   {
+//     id: 2,
+//     title: 'Modern Loft with City View',
+//     type: 'Loft',
+//     price: 3200,
+//     location: 'Soho, New York',
+//     image: 'https://images.unsplash.com/photo-1502672260266-37a6c1f2f3a5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1740&q=80',
+//     rating: 4.9,
+//     beds: 1,
+//     baths: 1,
+//     area: 950,
+//     featured: false
+//   },
+//   {
+//     id: 3,
+//     title: 'Spacious Family House',
+//     type: 'House',
+//     price: 4200,
+//     location: 'Brooklyn, New York',
+//     image: 'https://images.unsplash.com/photo-1580587771525-78b9dba3b914?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1740&q=80',
+//     rating: 4.7,
+//     beds: 4,
+//     baths: 2.5,
+//     area: 2200,
+//     featured: true
+//   }
+// ];
 
 const propertyTypes = ['All', 'Apartment', 'House', 'Condo', 'Loft', 'Townhouse'];
 const priceRanges = [
@@ -84,22 +86,37 @@ const TenantDashboard = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Simulate API call
-    const fetchProperties = async () => {
-      try {
-        // In a real app, you would fetch from your API
-        // const response = await axios.get('/api/properties');
-        // setProperties(response.data);
-        setProperties(mockProperties);
-      } catch (error) {
-        console.error('Error fetching properties:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
+  const fetchProperties = async () => {
+    try {
+      const response = await axios.get("/api/properties");
 
-    fetchProperties();
-  }, []);
+      const approved = response.data
+        .filter(p => p.status === "approved")
+        .map(p => ({
+          id: p._id,
+          title: p.title,
+          type: "House",
+          price: p.price,
+          location: p.location,
+          image: p.images?.[0] || "https://images.unsplash.com/photo-1568605114967-8130f3a36994",
+          rating: 4.5,
+          beds: 2,
+          baths: 1,
+          area: 1000,
+          featured: false
+        }));
+
+      setProperties(approved);
+    } catch (error) {
+      console.error("Error fetching properties:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  fetchProperties();
+}, []);
+
 
   const toggleFavorite = (propertyId) => {
     const newFavorites = new Set(favorites);
