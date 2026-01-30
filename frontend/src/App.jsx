@@ -195,6 +195,7 @@ import Register from "./pages/Register";
 import Landing from "./pages/Landing";
 import TenantDashboard from "./pages/tenant/Dashboard/Dashboard";
 import OwnerDashboard from "./pages/owner/OwnerDashboard";
+import AdminDashboard from "./pages/admin/AdminDashboard";
 
 // Context
 import { AuthProvider, useAuth } from "./context/AuthContext";
@@ -324,7 +325,7 @@ function App() {
             {/* ADMIN */}
             <Route path="/admin/dashboard" element={
               <ProtectedRoute>
-                <div>Admin Dashboard</div>
+                <AdminDashboard />
               </ProtectedRoute>
             } />
 
