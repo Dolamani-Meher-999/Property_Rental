@@ -41,6 +41,7 @@ function ErrorFallback({ error, resetErrorBoundary }) {
 // Pages
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import Landing from "./pages/Landing";
 import TenantDashboard from "./pages/tenant/Dashboard/Dashboard";
 
 // Context
@@ -106,8 +107,8 @@ const ProtectedRoute = ({ children }) => {
   }
 
   if (!isAuthenticated) {
-    console.log('User not authenticated, redirecting to login');
-    return <Navigate to="/login" replace />;
+    console.log('User not authenticated, redirecting to landing');
+    return <Navigate to="/landing" replace />;
   }
 
   console.log('Rendering protected content for user:', user?.role);
@@ -145,6 +146,7 @@ function App() {
                 <Register />
               </PublicRoute>
             } />
+            <Route path="/landing" element={<Landing />} />
             <Route path="/" element={
               <ProtectedRoute>
                 <TenantDashboard />
@@ -172,7 +174,7 @@ function App() {
               <Route path="profile" element={<div>Profile</div>} />
               <Route path="settings" element={<div>Settings</div>} />
             </Route>
-            <Route path="*" element={<Navigate to="/" replace />} />
+            <Route path="*" element={<Navigate to="/landing" replace />} />
           </Routes>
         </ErrorBoundary>
       </AuthProvider>
