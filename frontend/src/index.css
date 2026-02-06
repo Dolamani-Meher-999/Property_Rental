@@ -57,3 +57,18 @@
     @apply bg-background text-foreground;
   }
 }
+
+@layer components {
+  /* Dashboard soft gradient background */
+.app-body-gradient {
+  background: linear-gradient(
+    to left,
+    #fde7d8 0%,
+    #f9f2ea 35%,
+    #eef6f8 65%,
+    #e6f3f7 100%
+  );
+}
+
+}
+
