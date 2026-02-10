@@ -139,14 +139,14 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const token = localStorage.getItem('token');
+        const token = sessionStorage.getItem('token');
         if (token) {
           axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
           const res = await axios.get('/api/auth/me');
           setUser(res.data);
         }
       } catch {
-        localStorage.removeItem('token');
+        sessionStorage.removeItem('token');
         delete axios.defaults.headers.common['Authorization'];
       } finally {
         setLoading(false);
@@ -163,7 +163,7 @@ export const AuthProvider = ({ children }) => {
 
       const { token, user } = response.data;
 
-      localStorage.setItem('token', token);
+      sessionStorage.setItem('token', token);
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
       setUser(user);
 
@@ -175,8 +175,24 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  // Register function
+  const register = async (userData) => {
+    try {
+      setError(null);
+      setLoading(true);
+      const response = await axios.post('/api/auth/register', userData);
+      setLoading(false);
+      return { success: true, data: response.data };
+    } catch (err) {
+      setLoading(false);
+      const msg = err.response?.data?.message || 'Registration failed';
+      setError(msg);
+      return { success: false, error: msg };
+    }
+  };
+
   const logout = () => {
-    localStorage.removeItem('token');
+    sessionStorage.removeItem('token');
     delete axios.defaults.headers.common['Authorization'];
     setUser(null);
   };
@@ -188,6 +204,7 @@ export const AuthProvider = ({ children }) => {
       error,
       isAuthenticated: !!user,
       login,
+      register,
       logout
     }}>
       {children}
