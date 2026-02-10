@@ -24,8 +24,8 @@ const HeroSection = ({
           </span>
         )}
 
-        <h1 className="text-4xl font-bold mb-3">{title}</h1>
-        <p className="text-lg text-gray-200 max-w-2xl mb-6">{subtitle}</p>
+        <h1 className="text-4xl font-bold mb-3 text-white">{title}</h1>
+        <p className="text-lg text-white/90 max-w-2xl mb-6">{subtitle}</p>
 
         <div className="flex gap-4">
           {primaryAction}

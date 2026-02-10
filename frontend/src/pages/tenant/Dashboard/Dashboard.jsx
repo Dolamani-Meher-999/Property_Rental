@@ -372,18 +372,18 @@ const TenantDashboard = () => {
           backgroundPosition: 'center'
         }}
       >
-        <div className="absolute inset-0 bg-white/85"></div>
+        <div className="absolute inset-0 bg-black/60"></div>
 
         <div className="relative max-w-7xl mx-auto px-6 py-20">
           <span className="inline-block mb-4 px-3 py-1 text-sm rounded-full bg-orange-100 text-orange-700">
             Verified Rental Listings
           </span>
 
-          <h1 className="text-4xl font-bold text-gray-900 leading-tight">
+          <h1 className="text-4xl font-bold text-white leading-tight">
             Find Your Perfect Home
           </h1>
 
-          <p className="text-gray-700 mt-4 max-w-2xl">
+          <p className="text-white/90 mt-4 max-w-2xl">
             Browse verified rental properties from trusted owners across top locations.
             Simple, fast, and secure.
           </p>
@@ -393,7 +393,7 @@ const TenantDashboard = () => {
               Explore Properties
             </button>
 
-            <button className="px-6 py-3 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-100 transition">
+            <button className="px-6 py-3 rounded-lg border border-white/70 text-white hover:bg-white/10 transition">
               How it Works
             </button>
           </div>
@@ -491,6 +491,9 @@ const TenantDashboard = () => {
             ))}
           </div>
 
+          <Footer />
+
+
         </div>
       </div>
     </div>
@@ -498,3 +501,107 @@ const TenantDashboard = () => {
 };
 
 export default TenantDashboard;
+
+function Footer() {
+  return (
+    <footer className="w-full mt-16 bg-gradient-to-r from-slate-100 to-orange-100 border-t border-gray-200">
+      <div className="max-w-7xl mx-auto px-6 py-12">
+
+        {/* TOP GRID */}
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-10 mb-10">
+
+          {/* BRAND */}
+          <div>
+            <h2 className="text-gray-900 text-xl font-bold mb-4">
+              RentEasy
+            </h2>
+            <p className="text-sm text-gray-600">
+              Find your perfect home with ease. Connect with trusted
+              property owners and explore verified listings across
+              your city.
+            </p>
+          </div>
+
+          {/* PRODUCT */}
+          <div>
+            <h3 className="text-gray-800 font-semibold mb-4">
+              Product
+            </h3>
+            <ul className="space-y-2 text-sm text-gray-600">
+              <li className="hover:text-orange-500 cursor-pointer">
+                Browse Properties
+              </li>
+              <li className="hover:text-orange-500 cursor-pointer">
+                Saved Listings
+              </li>
+              <li className="hover:text-orange-500 cursor-pointer">
+                Tenant Dashboard
+              </li>
+              <li className="hover:text-orange-500 cursor-pointer">
+                Chat with Owners
+              </li>
+            </ul>
+          </div>
+
+          {/* SUPPORT */}
+          <div>
+            <h3 className="text-gray-800 font-semibold mb-4">
+              Support
+            </h3>
+            <ul className="space-y-2 text-sm text-gray-600">
+              <li className="hover:text-orange-500 cursor-pointer">
+                Help Center
+              </li>
+              <li className="hover:text-orange-500 cursor-pointer">
+                Contact Support
+              </li>
+              <li className="hover:text-orange-500 cursor-pointer">
+                FAQs
+              </li>
+              <li className="hover:text-orange-500 cursor-pointer">
+                Community
+              </li>
+            </ul>
+          </div>
+
+          {/* NEWSLETTER */}
+          <div>
+            <h3 className="text-gray-800 font-semibold mb-4">
+              Stay updated
+            </h3>
+            <p className="text-sm text-gray-600 mb-3">
+              Get latest property updates.
+            </p>
+
+            <div className="flex shadow-sm">
+              <input
+                type="email"
+                placeholder="Enter your email"
+                className="px-4 py-2 w-full rounded-l-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-400"
+              />
+              <button className="px-5 py-2 bg-orange-500 hover:bg-orange-600 text-white rounded-r-lg">
+                Subscribe
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* BOTTOM BAR */}
+        <div className="border-t border-gray-300 pt-6 flex flex-col md:flex-row justify-between text-sm text-gray-600">
+          <p>© {new Date().getFullYear()} RentEasy. All rights reserved.</p>
+
+          <div className="flex gap-6 mt-3 md:mt-0">
+            <span className="hover:text-orange-500 cursor-pointer">
+              Privacy Policy
+            </span>
+            <span className="hover:text-orange-500 cursor-pointer">
+              Terms of Service
+            </span>
+          </div>
+        </div>
+
+      </div>
+    </footer>
+  );
+}
+
